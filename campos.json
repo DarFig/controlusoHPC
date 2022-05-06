@@ -5,9 +5,6 @@
     "JobDuration": [
       1251.037071
     ],
-    "JobState": [
-      "Exited"
-    ],
     "Status": [
       "Completed"
     ],
@@ -35,17 +32,11 @@
     "RequestMemory": [
       11850
     ],
-    "ClusterId": [
-      3462
-    ],
     "group": [
       ""
     ],
     "StartdSlot": [
       "slot1_1"
-    ],
-    "RemoteSysCpu": [
-      1
     ],
     "RemoteHost": [
       ""
