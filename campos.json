@@ -1,0 +1,53 @@
+"fields": {
+    "Owner": [
+      ""
+    ],
+    "JobDuration": [
+      1251.037071
+    ],
+    "JobState": [
+      "Exited"
+    ],
+    "Status": [
+      "Completed"
+    ],
+    "JobStartDate": [
+      "2022-05-06T06:54:44.000Z"
+    ],
+    "RequestCpus": [
+      1
+    ],
+    "TotalSubmitProcs": [
+      1
+    ],
+    "JobCurrentStartDate": [
+      "2022-05-06T06:54:43.000Z"
+    ],
+    "StartdName": [
+      ""
+    ],
+    "CompletionDate": [
+      "2022-05-06T07:15:36.000Z"
+    ],
+    "architecture": [
+      "UNDEFINED"
+    ],
+    "RequestMemory": [
+      11850
+    ],
+    "ClusterId": [
+      3462
+    ],
+    "group": [
+      ""
+    ],
+    "StartdSlot": [
+      "slot1_1"
+    ],
+    "RemoteSysCpu": [
+      1
+    ],
+    "RemoteHost": [
+      ""
+    ],
+  }
