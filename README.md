@@ -1,8 +1,17 @@
 # controlusoHPC
 
+## Config
 
+File: "service.config"
 
-### Notes
+```
+[config]
+HOST=
+PORT=
+INDEX=
+```
+
+## Notes
 
 
 ```
