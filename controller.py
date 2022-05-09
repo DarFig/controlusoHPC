@@ -11,6 +11,6 @@ class Controller:
         self.client = Elasticsearch(self.__HOST)
 
     def match_all(self):
-        return client.search(index=get_index(), query={"match_all": {} })
+        return self.client.search(index=get_index(), query={"match_all": {} })
 
 
