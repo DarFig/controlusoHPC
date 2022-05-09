@@ -3,10 +3,14 @@
 from elasticsearch import Elasticsearch
 from loadconfig import * 
 
-__HOST = "http://"+ get_hostname()+ ":" + get_port() 
 
-client = Elasticsearch(__HOST)
 
-res = client.search(index=get_index(), query={"match_all": {} })
+class Controller:
+    def __init__(self):
+        self.__HOST = "http://"+ get_hostname()+ ":" + get_port() 
+        self.client = Elasticsearch(self.__HOST)
 
-print(res)
+    def match_all(self):
+        return client.search(index=get_index(), query={"match_all": {} })
+
+
