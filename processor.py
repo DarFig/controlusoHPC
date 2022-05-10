@@ -37,6 +37,18 @@ def get_user_usage(user:str, data:list)->dict:
     uch = hours * uc
     return {"time":hours, "uc":uc, "uch":uch}
 
+def get_group_users_usage(group:str, data:list)->list:
+    usuarios = {}
+    for work in data:
+        work = work_data(work)
+        if __get_group(work) == group:
+            owner = __get_owner(work)
+            if owner not in usuarios:
+                usuarios[owner]=get_user_usage(owner,data)
+
+    return usuarios 
+
+
 
 def get_groups(data:list)->set:
     groups = set()
