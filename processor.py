@@ -4,6 +4,14 @@ from utils import work_data, load_uc_json
 from loadconfig import get_use_uc_conversion
 
 
+
+def get_groups_usages(data:list)->list:
+    groups = get_groups(data)
+    groups_usages = {}
+    for group in groups:
+        groups_usages[group] = get_group_usage(group,data)
+    return groups_usages
+
 def get_group_usage(group:str, data:list)->dict:
     """
     group,data[works] -> return {"time":hours, "uc":uc, "uch":uch}
@@ -44,7 +52,7 @@ def get_group_users_usage(group:str, data:list)->list:
         if __get_group(work) == group:
             owner = __get_owner(work)
             if owner not in usuarios:
-                usuarios[owner]=get_user_usage(owner,data)
+                usuarios[owner] = get_user_usage(owner,data)
 
     return usuarios 
 
@@ -72,8 +80,12 @@ def __get_owner(work:list)->str:
     return work["Owner"]
 
 def __get_uc(work:list)->float:
+    # si es más que 2 machacamos con el valor que viene
+    uc = __uc_conversion(__get_startdname(work))
+    if uc > 2:
+        return uc
     cpus = __get_requestcpus(work)
-    return cpus * __uc_conversion(__get_startdname(work))
+    return cpus * uc
 
 
 def __get_requestcpus(work:list)->int:
@@ -93,6 +105,7 @@ def __uc_conversion(node:str)->float:
     if get_use_uc_conversion() != 0:
         for key in conversion:
             if key in node:
+                #print("1-",key," ",node," = ",conversion[key])
                 return conversion[key]
     return 1.0
 
