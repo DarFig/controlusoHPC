@@ -16,6 +16,13 @@ def get_group_usage(group:str, data:list)->dict:
     uch = hours * uc
     return {"time":hours, "uc":uc, "uch":uch}
 
+def get_groups(data:list)->set:
+    groups = set()
+    for work in data:
+        work = work_data(work)
+        groups.add(__get_group(work))
+
+    return groups
 
 ## priv
 
