@@ -18,4 +18,9 @@ def data_hits(data:dict)->list:
 def work_data(work:list)->list:
     return work["_source"]
 
-
+def load_uc_json()->dict:
+    import json
+    f = open('uc.config', "r")
+    data = json.loads(f.read())
+    f.close()
+    return data

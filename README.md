@@ -9,6 +9,7 @@ File: "service.config"
 HOST=
 PORT=
 INDEX=
+UC_CONVERSION=1/0
 ```
 
 ## Notes

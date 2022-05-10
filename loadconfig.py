@@ -18,3 +18,9 @@ def get_index():
     new_parser = ConfigParser()
     new_parser.read(__CONFIGFILE)
     return new_parser.get("config", "INDEX")
+
+def get_use_uc_conversion():
+    new_parser = ConfigParser()
+    new_parser.read(__CONFIGFILE)
+    return new_parser.get("config", "UC_CONVERSION")
+
