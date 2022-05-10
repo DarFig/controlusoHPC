@@ -11,3 +11,11 @@ def get_timestamp(date:str)->int:
     date = datetime.strptime(date, "%d/%m/%Y")
     timestamp = datetime.timestamp(date)
     return int(timestamp)
+
+def data_hits(data:dict)->list:
+    return data["hits"]["hits"]
+
+def work_data(work:list)->list:
+    return work["_source"]
+
+
