@@ -4,8 +4,8 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 
-from controlhpc.controller import Controller
-from controlhpc.processor import *
+from apicontrolusohpc.controlhpc.controller import Controller
+from apicontrolusohpc.controlhpc.processor import *
 
 views_bp = Blueprint('views', __name__)
 
@@ -23,7 +23,7 @@ def index():
         results = get_groups_usages(data)
 
         #
-        return render_template('_views/respuesta.html', data=results)
+        return render_template('_views/results.html', data=results)
 
     return render_template('_views/index.html')
 

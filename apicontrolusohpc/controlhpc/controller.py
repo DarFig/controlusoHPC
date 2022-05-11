@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from elasticsearch import Elasticsearch
-from controlhpc.loadconfig import * 
-from controlhpc.utils import get_timestamp, data_hits
+from apicontrolusohpc.controlhpc.loadconfig import * 
+from apicontrolusohpc.controlhpc.utils import get_timestamp, data_hits
 
 
 class Controller:

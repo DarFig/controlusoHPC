@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from controlhpc.utils import work_data, load_uc_json
-from controlhpc.loadconfig import get_use_uc_conversion
+from apicontrolusohpc.controlhpc.utils import work_data, load_uc_json
+from apicontrolusohpc.controlhpc.loadconfig import get_use_uc_conversion
 
 
 
