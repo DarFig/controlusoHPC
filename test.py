@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from controller import Controller
-from processor import *
-from utils import load_uc_json
+from controlhpc.controller import Controller
+from controlhpc.processor import *
 
 import pprint
 

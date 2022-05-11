@@ -2,7 +2,7 @@
 
 from configparser import ConfigParser
 
-__CONFIGFILE="service.config"
+__CONFIGFILE="./service.config"
 
 def get_hostname():
     new_parser = ConfigParser()

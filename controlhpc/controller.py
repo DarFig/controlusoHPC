@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from elasticsearch import Elasticsearch
-from loadconfig import * 
-from utils import get_timestamp, data_hits
+from controlhpc.loadconfig import * 
+from controlhpc.utils import get_timestamp, data_hits
 
 
 class Controller:
     def __init__(self):
+        self.__CONFIGFILE="service.config"
         self.__HOST = "http://"+ get_hostname()+ ":" + get_port()
         self.__INDEX = get_index()
         self.client = Elasticsearch(self.__HOST)
