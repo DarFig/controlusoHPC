@@ -10,6 +10,7 @@ HOST=
 PORT=
 INDEX=
 UC_CONVERSION=1/0
+SECRET="random key"
 ```
 
 ## Notes
