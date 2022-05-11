@@ -1,0 +1,14 @@
+<div id="middle">
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <form method=''>
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        <button type='submit'></button>
+    </form>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+</div>
