@@ -6,4 +6,9 @@ from flask import (
 
 views_bp = Blueprint('views', __name__)
 
+@views_bp.route('/', methods=['GET'])
+def index():
+    return render_template('_views/index.html')
+
+
 
