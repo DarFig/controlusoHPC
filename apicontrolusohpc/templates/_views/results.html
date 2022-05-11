@@ -1,0 +1,23 @@
+{% extends "_layouts/base.html" %}
+{% block title %}
+
+Results | {{ super() }}
+
+{% endblock %}
+{% block content %}
+
+<div id="content" class="columns">
+
+
+<div class="column is-offset-one-fifth">
+    <div class="card is-three-fifths">
+        
+        {{data}}
+
+    </div>
+
+</div>
+
+
+</div>
+{% endblock %}
