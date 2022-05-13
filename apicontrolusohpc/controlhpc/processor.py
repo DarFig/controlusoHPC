@@ -71,7 +71,10 @@ def get_groups(data:list)->set:
 ## priv
 
 def __get_jobduration(work:list)->float:
-    return work["JobDuration"]
+    try:
+        return work["JobDuration"]
+    except:
+        return 0.0
 
 def __get_group(work:list)->str:
     return work["group"]
