@@ -11,8 +11,13 @@ Results | {{ super() }}
 
 <div class="column is-offset-one-fifth">
     <div class="card is-three-fifths">
+       
+        {% for k in data %}
         
-        {{data}}
+        
+        <p>{{k}} -- tiempo:{{data[k]['time']}}, uc:{{ data[k]['uc'] }}, uch:{{ data[k]['uch'] }}</p>
+
+        {% endfor %}
 
     </div>
 

@@ -17,17 +17,28 @@ def get_group_usage(group:str, data:list)->dict:
     group,data[works] -> return {"time":hours, "uc":uc, "uch":uch}
     """
     group_jobduration = 0.0
-    uc = 0.0
-    uch = 0.0
+    group_uc = 0.0
+    group_uch = 0.0
+    c = 0
+    n_c = 0
     for work in data:
         work = work_data(work)
+        n_c += 1
         if __get_group(work) == group:
-            group_jobduration += __get_jobduration(work)
-            uc += __get_uc(work)
+            duration = __get_jobduration(work)
+            group_jobduration += duration
+
+            uc = __get_uc(work)
+            group_uc += uc
+            
+            hours = __s_h(duration)
+            group_uch += hours * uc
+            c += 1
+    print(n_c, "----", c)
     
-    hours = __s_h(group_jobduration)
-    uch = hours * uc
-    return {"time":hours, "uc":uc, "uch":uch}
+    group_hours = __s_h(group_jobduration)
+    #uch = hours * uc
+    return {"time":group_hours, "uc":group_uc, "uch":group_uch}
 
 def get_user_usage(user:str, data:list)->dict:
     """
@@ -71,16 +82,24 @@ def get_groups(data:list)->set:
 ## priv
 
 def __get_jobduration(work:list)->float:
+    #return work["JobDuration"]
     try:
         return work["JobDuration"]
     except:
+        #print(work)
         return 0.0
 
 def __get_group(work:list)->str:
-    return work["group"]
+    try:
+        return work["group"]
+    except:
+        return work["Iwd"].split("/")[4]
 
 def __get_owner(work:list)->str:
     return work["Owner"]
+
+def __get_status(work:list)->str:
+    return work["Status"]
 
 def __get_uc(work:list)->float:
     # si es más que 2 machacamos con el valor que viene
