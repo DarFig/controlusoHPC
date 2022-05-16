@@ -22,4 +22,4 @@ class Controller:
             final_date: string format %d/%m/%Y
         output: dict data-json 
         """
-        return data_hits(self.client.search(index=self.__INDEX,size=10000,query={"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}))
+        return data_hits(self.client.search(index=self.__INDEX,size=100000,scroll="1m",query={"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}))
