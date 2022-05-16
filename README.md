@@ -13,6 +13,16 @@ UC_CONVERSION=1/0
 SECRET="random key"
 ```
 
+
+## Develop
+
+```
+export FLASK_APP=apicontrolusohpc
+export FLASK_ENV=development
+flask run
+# flask run --host 0.0.0.0
+```
+
 ## Notes
 
 
