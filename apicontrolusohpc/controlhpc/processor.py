@@ -21,7 +21,7 @@ def get_group_usage(group:str, data:list)->dict:
     group_uch = 0.0
     for work in data:
         work = work_data(work)
-        if __get_group(work) == group:
+        if __get_group(work) == group and __get_status(work) == "Completed":
             duration = __get_jobduration(work)
             group_jobduration += duration
 
@@ -33,7 +33,7 @@ def get_group_usage(group:str, data:list)->dict:
     
     group_hours = __s_h(group_jobduration)
     #uch = hours * uc
-    return {"time":group_hours, "uc":group_uc, "uch":group_uch}
+    return {"time":round(group_hours,2), "uc":round(group_uc,2), "uch":round(group_uch,2)}
 
 def get_user_usage(user:str, data:list)->dict:
     """
@@ -44,7 +44,7 @@ def get_user_usage(user:str, data:list)->dict:
     user_uch = 0.0
     for work in data:
         work = work_data(work)
-        if __get_owner(work) == user:
+        if __get_owner(work) == user and __get_status(work) == "Completed":
             duration = __get_jobduration(work)
             user_jobduration += duration
 
@@ -56,7 +56,7 @@ def get_user_usage(user:str, data:list)->dict:
 
     user_hours = __s_h(user_jobduration)
     #uch = hours * uc
-    return {"time":user_hours, "uc":user_uc, "uch":user_uch}
+    return {"time":round(user_hours,2), "uc":round(user_uc,2), "uch":round(user_uch,2)}
 
 def get_group_users_usage(group:str, data:list)->list:
     usuarios = {}
@@ -88,17 +88,16 @@ def __get_jobduration(work:list)->float:
     try:
         return work["JobDuration"]
     except:
-        #print(work)
-        return 0.0
+        #print(work["Status"],"---",work["CompletionDate"]-work["JobStartDate"])
+        return float(work["CompletionDate"]-work["JobStartDate"])
 
 def __get_group(work:list)->str:
     try:
-        return work["group"]
+        return work["group"].upper()
     except:
         if work["UserLog"].split("/")[2] == "cephfs":
-            print(work["UserLog"].split("/")[4])
-            return work["UserLog"].split("/")[4]
-        return work["UserLog"].split("/")[2]
+            return work["UserLog"].split("/")[4].upper()
+        return work["UserLog"].split("/")[2].upper()
 
 def __get_owner(work:list)->str:
     return work["Owner"]
@@ -133,6 +132,6 @@ def __uc_conversion(node:str)->float:
         for key in conversion:
             if key in node:
                 #print("1-",key," ",node," = ",conversion[key])
-                return conversion[key]
+                return float(conversion[key])
     return 1.0
 
