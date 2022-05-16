@@ -19,11 +19,8 @@ def get_group_usage(group:str, data:list)->dict:
     group_jobduration = 0.0
     group_uc = 0.0
     group_uch = 0.0
-    c = 0
-    n_c = 0
     for work in data:
         work = work_data(work)
-        n_c += 1
         if __get_group(work) == group:
             duration = __get_jobduration(work)
             group_jobduration += duration
@@ -33,7 +30,6 @@ def get_group_usage(group:str, data:list)->dict:
             
             hours = __s_h(duration)
             group_uch += hours * uc
-            c += 1
     
     group_hours = __s_h(group_jobduration)
     #uch = hours * uc
@@ -44,16 +40,23 @@ def get_user_usage(user:str, data:list)->dict:
     user,data[works] -> return {"time":hours, "uc":uc, "uch":uch}
     """
     user_jobduration = 0.0
-    uc = 0.0
-    uch = 0.0
+    user_uc = 0.0
+    user_uch = 0.0
     for work in data:
         work = work_data(work)
         if __get_owner(work) == user:
-            user_jobduration += __get_jobduration(work)
+            duration = __get_jobduration(work)
+            user_jobduration += duration
+
             uc += __get_uc(work)
-    hours = __s_h(user_jobduration)
-    uch = hours * uc
-    return {"time":hours, "uc":uc, "uch":uch}
+            group_uc += uc
+
+            hours = __s_h(duration)
+            group_uch += hours * uc
+
+    user_hours = __s_h(user_jobduration)
+    #uch = hours * uc
+    return {"time":user_hours, "uc":user_uc, "uch":user_uch}
 
 def get_group_users_usage(group:str, data:list)->list:
     usuarios = {}
