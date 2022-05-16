@@ -34,7 +34,6 @@ def get_group_usage(group:str, data:list)->dict:
             hours = __s_h(duration)
             group_uch += hours * uc
             c += 1
-    print(n_c, "----", c)
     
     group_hours = __s_h(group_jobduration)
     #uch = hours * uc
@@ -93,7 +92,10 @@ def __get_group(work:list)->str:
     try:
         return work["group"]
     except:
-        return work["Iwd"].split("/")[4]
+        if work["UserLog"].split("/")[2] == "cephfs":
+            print(work["UserLog"].split("/")[4])
+            return work["UserLog"].split("/")[4]
+        return work["UserLog"].split("/")[2]
 
 def __get_owner(work:list)->str:
     return work["Owner"]
