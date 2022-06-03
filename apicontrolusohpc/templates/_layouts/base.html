@@ -8,9 +8,12 @@
   <base href="/" target="" />
   <title>{% block title %}ControlUsoHPC{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma-calendar.min.css') }}">
+  
   
   {% block css %}
-  <link href="static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <script src="/static/js/bulma-calendar.min.js"></script>
   {% endblock %}
   
 </head>
@@ -38,6 +41,15 @@
   <footer class="">
     {% include "_modules/footer.html" %}
   </footer>
+
+  <!-- JS parámetros calendar Bulma-->
+  <!-- <script>
+    var options = {
+      dateFormat: 'DD/MM/YYYY'
+    };
+    bulmaCalendar.attach('[type="date"]', options);
+  </script> -->
+
 </body>
 
 </html>
