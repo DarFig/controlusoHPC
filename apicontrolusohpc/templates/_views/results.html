@@ -6,22 +6,60 @@ Results | {{ super() }}
 {% endblock %}
 {% block content %}
 
-<div id="content" class="columns">
+<div id="content" class="results columns p-4">
 
+    <div class="column is-half is-offset-one-quarter">
 
-<div class="column is-offset-one-fifth">
-    <div class="card is-three-fifths">
-       
+        <div class="container">
+            <div class="columns p-4  ">
+                <div class="column is-4 p-1">
+                    <p class="title is-2 has-text-white">Grupo:</p>
+                </div>
+                <div class="column is-4 p-1">
+                    <p class="title is-2 has-text-white">Horas:</p>
+                </div>
+                <div class="column is-4 p-1">
+                    <p class="title is-2 has-text-white">UCH:</p>
+                </div>
+            </div>
+        </div>
+
         {% for k in data %}
-        
-        
-        <p>{{k}} -- horas:{{data[k]['time']}}, uch:{{ data[k]['uch'] }}</p>
+
+        <div class="container each-result">
+
+            <div class="columns p-4 ">
+
+                <!-- <div class="column is-4 p-3">
+                <div class="column card has-background-light">
+                    <p>{{k}} -- horas:{{data[k]['time']}}, uch:{{ data[k]['uch'] }}</p>
+                </div>
+            </div> -->
+
+                <div class="column is-4 p-1">
+                    <div class="column card has-background-light">
+                        <p>{{k}}</p>
+                    </div>
+                </div>
+
+                <div class="column is-4 p-1">
+                    <div class="column card has-background-light">
+                        <p>{{data[k]['time']}}</p>
+                    </div>
+                </div>
+
+                <div class="column is-4 p-1">
+                    <div class="column card has-background-light">
+                        <p>{{ data[k]['uch'] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% endfor %}
 
-    </div>
 
-</div>
+    </div>
 
 
 </div>

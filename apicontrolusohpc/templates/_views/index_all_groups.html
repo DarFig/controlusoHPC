@@ -1,0 +1,65 @@
+{% extends "_layouts/base.html" %}
+{% block title %}
+
+Index | {{ super() }}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div id="content" class="columns p-6 ">
+
+        <div class="column is-half is-offset-one-quarter">
+            <div class="column card has-background-light">
+                <form method="post" class="column">
+
+                    <div class="field">
+                        <label class="label">Fecha inicio</label>
+                        <div class="control">
+                            <input type="date" id="start_date" name="start_date">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="label">Fecha fin</label>
+                        <div class="control">
+                            <input type="date" id="end_date" name="end_date" > 
+                            <script>
+                                var options = {
+                                dateFormat: 'dd/MM/yyyy',
+                                showFooter: false,
+                                color: "link"
+                                };
+                                bulmaCalendar.attach('[type="date"]', options);
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="control buttons is-right pt-4">
+                        <button class="button is-link" type="submit" value="register">Calcular</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div id="content" class="columns">
+
+    <div class="column is-three-fifths">
+        <div class="column card is-three-fifths is-offset-7">
+            <form method="post" class="column">
+                <div class="field"><input class="input is-primary" type="text" id="start_date" name="start_date"
+                        placeholder="dd/mm/yyyy"></div>
+                <div class="field"><input class="input is-primary" type="text" id="end_date" name="end_date"
+                        placeholder="dd/mm/yyyy"></div>
+                <button class="button niceButton" type="submit" value="register">submit</button>
+            </form>
+        </div>
+    </div>
+
+</div> -->
+{% endblock %}
