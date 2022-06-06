@@ -1,3 +1,8 @@
 body, header, footer, html, .results, .each-result {
     background-color: #005095;
+    color: #fff;
+}
+
+.title, .subtitle, .content h1, .content h2 {
+    color: #fff;
 }

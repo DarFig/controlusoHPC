@@ -6,11 +6,15 @@ Index | {{ super() }}
 {% endblock %}
 {% block content %}
 
+
+
+
 <div class="container">
 
-    <div id="content" class="columns p-6 ">
+    <div id="content" class="columns p-6 ">        
 
-        <div class="column is-half is-offset-one-quarter">
+        <div class="column is-half is-offset-one-quarter">            
+
             <div class="column card has-background-light">
                 <form method="post" class="column">
 
@@ -24,12 +28,12 @@ Index | {{ super() }}
                     <div>
                         <label class="label">Fecha fin</label>
                         <div class="control">
-                            <input type="date" id="end_date" name="end_date" > 
+                            <input type="date" id="end_date" name="end_date">
                             <script>
                                 var options = {
-                                dateFormat: 'dd/MM/yyyy',
-                                showFooter: false,
-                                color: "link"
+                                    dateFormat: 'dd/MM/yyyy',
+                                    showFooter: false,
+                                    color: "link"
                                 };
                                 bulmaCalendar.attach('[type="date"]', options);
                             </script>
@@ -43,7 +47,7 @@ Index | {{ super() }}
                 </form>
             </div>
         </div>
-        
+
     </div>
 </div>
 
