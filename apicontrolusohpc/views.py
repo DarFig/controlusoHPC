@@ -16,15 +16,31 @@ def index():
         # recuperar entradas
         start_date = request.form["start_date"]
         end_date = request.form["end_date"]
-        
+        group = request.form["group"]
+
         # cálculo
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date)
-        results = get_groups_usages(data)
+        results = get_group_usage(group, data)
 
         #
         return render_template('_views/results.html', data=results)
 
     return render_template('_views/index.html')
 
+@views_bp.route('/group', methods=['GET','POST'])
+def index_group():
+    if request.method == "POST":
+        #recuperar entradas
+        start_date = request.form["start_date"]
+        end_date = request.form["end_date"]
 
+        #calculo
+        new_controller = Controller()
+        data =  new_controller.match_date_range(start_date, end_date)
+        results = get_groups_usages(data)
+        
+        #
+        render_template('_views/results', data=results)
+
+    return render_template('_views/index_group.html')
