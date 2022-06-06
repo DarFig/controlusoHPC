@@ -11,17 +11,26 @@ Index | {{ super() }}
 
 <div class="container">
 
-    <div id="content" class="columns p-6 ">        
+    <div id="content" class="columns p-6 ">
 
-        <div class="column is-half is-offset-one-quarter">            
+        <div class="column is-half is-offset-one-quarter">
 
-            <div class="column card has-background-light">
+            <div class="column card has-background-light ">
                 <form method="post" class="column">
 
                     <div class="field">
                         <label class="label">Fecha inicio</label>
                         <div class="control">
                             <input type="date" id="start_date" name="start_date">
+                            <script>
+                                var options = {
+                                    dateFormat: 'dd/MM/yyyy',
+                                    color: "primary",
+                                    showClearButton: false,
+                                    startDate: "01/01/2022"
+                                };
+                                bulmaCalendar.attach('[type="date"]', options);
+                            </script>
                         </div>
                     </div>
 
@@ -32,20 +41,73 @@ Index | {{ super() }}
                             <script>
                                 var options = {
                                     dateFormat: 'dd/MM/yyyy',
-                                    showFooter: false,
-                                    color: "link"
+                                    color: "primary",
+                                    showClearButton: false,
+                                    startDate: "01/01/2022"                                    
                                 };
                                 bulmaCalendar.attach('[type="date"]', options);
                             </script>
                         </div>
                     </div>
 
+                    <div class="field mt-4">
+                        <label class="label">Grupo</label>
+                        <div class="select is-primary">
+                            <select id="group" name="group" class="is-primary">
+                                <option value="">Elige un grupo...</option>
+                                <option value="">AFFECTIVE LAB</option>
+                                <option value="AMB">AMB</option>
+                                <option value="BIO">BSICoS</option>
+                                <option value="CENITEQ">CeNIT</option>
+                                <option value="COSMOS">COSMOS</option>
+                                <option value="CREG">CREG</option>
+                                <option value="DISCO">DisCo</option>
+                                <option value="GATHERS">GATHERS</option>
+                                <option value="GAZ">GAZ</option>
+                                <option value="GBM">GBM</option>
+                                <option value="GDE">GDE</option>
+                                <option value="GEPM">GEPM</option>
+                                <option value="">GIA</option>
+                                <option value="GIFMA">GIFMA</option>
+                                <option value="GITSE">GITSE</option>
+                                <option value="GPT">GPT</option>
+                                <option value="GRAPHICS">Graphics &amp; Imaging Lab</option>
+                                <option value="GTF">GTF</option>
+                                <option value="GUIA">GUIA</option>
+                                <option value="HOWLAB">HOWLab</option>
+                                <option value="IAAA">IAAA</option>
+                                <option value="IDERGO">ID_ERGO</option>
+                                <option value="ISAAC">ISAAC Lab</option>
+                                <option value="M2BE">M2BE</option>
+                                <option value="MARTE">MARTE</option>
+                                <option value="ROPERT">RoPeRT</option>
+                                <option value="SID">SID</option>
+                                <option value="TFD">TFD</option>
+                                <option value="TIIP">TIIP</option>
+                                <option value="TMELAB">TME Lab</option>
+                                <option value="TOL">TOL</option>
+                                <option value="">UIF</option>
+                                <option value="vehivVEHIVIALial">VEHIVIAL</option>
+                                <option value="VOZ">ViVoLab</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="control buttons is-right pt-4">
-                        <button class="button is-link" type="submit" value="register">Calcular</button>
+                        <button class="button is-primary is-size-5" type="submit" value="register">Calcular</button>
                     </div>
 
                 </form>
             </div>
+
+            <div class="notification has-text-black ptb-4 plr-6 mt-6">
+                <label class="label">Atención</label>
+                <ul>
+                    <li>Estos datos sólo incluyen el uso en hermes2</li>
+                    <li>Estos datos no incluyen posibles descuentos y bonificaciones activas</li>
+                </ul>
+            </div>
+
         </div>
 
     </div>

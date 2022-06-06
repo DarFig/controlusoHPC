@@ -1,8 +1,13 @@
 body, header, footer, html, .results, .each-result {
-    background-color: #005095;
+    background-color: #003766;
     color: #fff;
 }
 
 .title, .subtitle, .content h1, .content h2 {
     color: #fff;
+}
+
+ul {
+    list-style: disc;
+    padding-left: 1em;
 }

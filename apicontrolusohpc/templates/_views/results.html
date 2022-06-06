@@ -11,15 +11,15 @@ Results | {{ super() }}
     <div class="column is-half is-offset-one-quarter">
 
         <div class="container">
-            <div class="columns p-4">
+            <div class="columns p-4 has-text-centered">
                 <div class="column is-4 p-1">
-                    <p class="title is-3 has-text-white">Grupo</p>
+                    <p class="title is-5 has-text-white">Grupo</p>
                 </div>
                 <div class="column is-4 p-1">
-                    <p class="title is-3 has-text-white">Horas</p>
+                    <p class="title is-5 has-text-white">Horas</p>
                 </div>
                 <div class="column is-4 p-1">
-                    <p class="title is-3 has-text-white">UCH</p>
+                    <p class="title is-5 has-text-white">UCH</p>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@ Results | {{ super() }}
 
         <div class="container each-result">
 
-            <div class="columns p-4 has-text-weight-bold">
+            <div class="columns p-4 has-text-weight-semibold has-text-centered">
 
                 <!-- <div class="column is-4 p-3">
                 <div class="column card has-background-light">
@@ -36,20 +36,20 @@ Results | {{ super() }}
                 </div>
             </div> -->
 
-                <div class="column is-4 p-1">
-                    <div class="column card has-background-light">
+                <div class="column is-4 p-2">
+                    <div class="column card has-background-light is-size-5">
                         <p>{{k}}</p>
                     </div>
                 </div>
 
-                <div class="column is-4 p-1">
-                    <div class="column card has-background-light">
+                <div class="column is-4 p-2">
+                    <div class="column card has-background-light is-size-5">
                         <p>{{data[k]['time']}}</p>
                     </div>
                 </div>
 
-                <div class="column is-4 p-1">
-                    <div class="column card has-background-light">
+                <div class="column is-4 p-2">
+                    <div class="column card has-background-light is-size-5">
                         <p>{{ data[k]['uch'] }}</p>
                     </div>
                 </div>
@@ -58,8 +58,15 @@ Results | {{ super() }}
 
         {% endfor %}
 
+        <div class="control buttons is-centered pt-6">
+            <a class="button is-primary is-size-5" href="{{ url_for( 'index' ) }}" title="Volver">Volver</a>
+        </div>
+
 
     </div>
+
+
+
 
 
 </div>

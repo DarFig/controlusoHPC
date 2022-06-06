@@ -21,7 +21,8 @@ def index():
         # cálculo
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date)
-        results = get_group_usage(group, data)
+        results = {}
+        results[group] = get_group_usage(group, data)
 
         #
         return render_template('_views/results.html', data=results)
@@ -30,6 +31,7 @@ def index():
 
 @views_bp.route('/group', methods=['GET','POST'])
 def index_group():
+
     if request.method == "POST":
         #recuperar entradas
         start_date = request.form["start_date"]
@@ -39,8 +41,7 @@ def index_group():
         new_controller = Controller()
         data =  new_controller.match_date_range(start_date, end_date)
         results = get_groups_usages(data)
-        
         #
-        render_template('_views/results', data=results)
+        return render_template('_views/results.html', data=results)
 
     return render_template('_views/index_group.html')
