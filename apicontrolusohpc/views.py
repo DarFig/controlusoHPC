@@ -28,10 +28,10 @@ def index():
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date)
         results = {}
-        results[group] = get_group_usage(group, data)
-        
+        #results[group] = get_group_usage(group, data)
+        results = get_group_usage(group, data)
         #
-        return render_template('_views/index.html', data=results)
+        return render_template('_views/index.html', data=results, group=group)
 
     return render_template('_views/index.html')
 
