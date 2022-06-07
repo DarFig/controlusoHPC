@@ -44,7 +44,6 @@ def get_messages():
         f = open('messages.config', "r")
         data = json.loads(f.read())
         f.close()
-        print(data)
         return data
     except:
         return None
