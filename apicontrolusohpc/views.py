@@ -24,6 +24,7 @@ def index():
         
         user = session['username']
         group = session['group']
+        
 
         # cálculo
         new_controller = Controller()
