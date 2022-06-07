@@ -38,3 +38,7 @@ GET /<index_name>/_search
   }
 }
 ```
+
+```
+apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev
+```
