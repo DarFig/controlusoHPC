@@ -31,7 +31,7 @@ def index():
         results[group] = get_group_usage(group, data)
         
         #
-        return render_template('_views/results.html', data=results)
+        return render_template('_views/index.html', data=results)
 
     return render_template('_views/index.html')
 
