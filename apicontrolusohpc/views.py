@@ -31,7 +31,6 @@ def index():
         results = {}
         #results[group] = get_group_usage(group, data)
         results = get_group_usage(group, data)
-        print(results)
         #
         return render_template('_views/index.html', data=results, group=group, messages=get_messages())
 
