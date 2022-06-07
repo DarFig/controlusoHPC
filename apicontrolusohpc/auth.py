@@ -12,6 +12,8 @@ from apicontrolusohpc.utils import authentication, search_group
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
+#/auth/login
 @auth_bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
@@ -22,7 +24,7 @@ def login():
         if not username or not password:
             error = "Se requiere usuario y contraseña"
         else:
-            user_data = authentication("", "")
+            user_data = authentication(username, password)
             if user_data == "error":
                 error = "fallo de autenticación"
             else:
@@ -30,11 +32,12 @@ def login():
 
         if error is None:
             session.clear()
-            session[username] = username
-            session[password] = password
-            return redirect(url_for("index"))
+            session["username"] = username
+            session["group"] = group
+            #print(group)
+            return redirect(url_for('index'))
         
-    
+        #print(error) 
     return render_template("_views/login.html")
 
 
@@ -42,16 +45,15 @@ def login():
 @auth_bp.before_app_request
 def load_logged_in_user():
     username = session.get('username')
-    password = session.get('password')
+    group = session.get('group')
 
-    print(username)
     if username is None:
         g.user = None
     else:
         g.user = username
 
 
-
+#/auth/logout
 @auth_bp.route('/logout')
 def logout():
     session.clear()

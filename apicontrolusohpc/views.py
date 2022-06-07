@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, session
 )
 
 from apicontrolusohpc.controlhpc.controller import Controller
@@ -19,14 +19,17 @@ def index():
         # recuperar entradas
         start_date = request.form["start_date"]
         end_date = request.form["end_date"]
-        group = request.form["group"]
+        #group = request.form["group"]
+        
+        user = session['username']
+        group = session['group']
 
         # cálculo
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date)
         results = {}
         results[group] = get_group_usage(group, data)
-
+        
         #
         return render_template('_views/results.html', data=results)
 
