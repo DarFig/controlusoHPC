@@ -38,6 +38,11 @@ def load_logged_in_user():
     username = session.get('username')
     password = session.get('password')
 
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = username
+
 
 
 @auth_bp.route('/logout')
