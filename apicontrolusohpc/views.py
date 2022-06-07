@@ -7,7 +7,7 @@ from flask import (
 from apicontrolusohpc.controlhpc.controller import Controller
 from apicontrolusohpc.controlhpc.processor import *
 
-from auth import login_required
+from apicontrolusohpc.auth import login_required
 
 views_bp = Blueprint('views', __name__)
 
