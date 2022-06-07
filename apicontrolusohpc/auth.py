@@ -32,10 +32,10 @@ def login():
             session.clear()
             session[username] = username
             session[password] = password
-            return redirect(url_for('index'))
+            return redirect(url_for("index"))
         
     
-    return render_template('_views/login.html')
+    return render_template("_views/login.html")
 
 
 
@@ -44,6 +44,7 @@ def load_logged_in_user():
     username = session.get('username')
     password = session.get('password')
 
+    print(username)
     if username is None:
         g.user = None
     else:
@@ -54,14 +55,14 @@ def load_logged_in_user():
 @auth_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
 
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
-            return redirect(url_for('auth.login'))
+            return redirect(url_for("auth.login"))
 
         return view(**kwargs)
 
