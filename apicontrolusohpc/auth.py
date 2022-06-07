@@ -21,7 +21,13 @@ def login():
 
         if not username or not password:
             error = "Se requiere usuario y contraseña"
-        
+        else:
+            user_data = authentication("", "")
+            if user_data == "error":
+                error = "fallo de autenticación"
+            else:
+                group = search_group(user_data)
+
         if error is None:
             session.clear()
             session[username] = username
