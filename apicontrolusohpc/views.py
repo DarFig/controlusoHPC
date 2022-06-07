@@ -7,9 +7,12 @@ from flask import (
 from apicontrolusohpc.controlhpc.controller import Controller
 from apicontrolusohpc.controlhpc.processor import *
 
+from auth import login_required
+
 views_bp = Blueprint('views', __name__)
 
 @views_bp.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
 
     if request.method == "POST":
@@ -30,6 +33,7 @@ def index():
     return render_template('_views/index.html')
 
 @views_bp.route('/group', methods=['GET','POST'])
+@login_required
 def index_group():
 
     if request.method == "POST":
@@ -45,3 +49,6 @@ def index_group():
         return render_template('_views/results.html', data=results)
 
     return render_template('_views/index_group.html')
+
+
+

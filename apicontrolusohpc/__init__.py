@@ -18,6 +18,9 @@ def create_app():
         pass
 
 
+    from . import auth
+    app.register_blueprint(auth.auth_bp)
+
     from . import views
     app.register_blueprint(views.views_bp)
     app.add_url_rule('/', endpoint='index')

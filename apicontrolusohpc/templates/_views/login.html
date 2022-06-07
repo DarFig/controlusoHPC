@@ -1,0 +1,55 @@
+{% extends "_layouts/base.html" %}
+{% block title %}
+
+Login | {{ super() }}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div id="content" class="columns p-6 ">
+
+        <div class="column is-half is-offset-one-quarter">
+
+            <div class="column card has-background-light ">
+                <form method="post" class="column">
+
+                    <div class="field">
+                        <label class="label">username</label>
+                        <div class="control">
+                            <input type="text" id="username" name="username">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="label">password</label>
+                        <div class="control">
+                            <input type="password" id="password" name="password">
+                            
+                        </div>
+                    </div>
+
+
+                    <div class="control buttons is-right pt-4">
+                        <button class="button is-primary is-size-5" type="submit" value="register">Calcular</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="notification has-text-black ptb-4 plr-6 mt-6">
+                <label class="label">Atención</label>
+                <ul>
+                    <li>Estos datos sólo incluyen el uso en Hermes2</li>
+                    <li>Estos datos no incluyen posibles descuentos o bonificaciones activas</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
