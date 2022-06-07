@@ -8,6 +8,7 @@ from apicontrolusohpc.controlhpc.controller import Controller
 from apicontrolusohpc.controlhpc.processor import *
 
 from apicontrolusohpc.auth import login_required
+from apicontrolusohpc.utils import get_messages
 
 views_bp = Blueprint('views', __name__)
 
@@ -32,7 +33,7 @@ def index():
         results = get_group_usage(group, data)
         print(results)
         #
-        return render_template('_views/index.html', data=results, group=group)
+        return render_template('_views/index.html', data=results, group=group, messages=get_messages())
 
     return render_template('_views/index.html')
 

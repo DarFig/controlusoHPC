@@ -37,3 +37,13 @@ def search_group(user_data:str):
         #re.search("home\/*\/", user_data)
     
     return group
+
+def get_messages():
+    import json
+    try:
+        f = open('messages.config', "r")
+        data = json.loads(f.read())
+        f.close()
+        return data
+    except:
+        return None

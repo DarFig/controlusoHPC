@@ -102,14 +102,17 @@ Index | {{ super() }}
                
 
             {% endif %}
-
+            
+            {% if messages  %}
             <div class="notification has-text-black ptb-4 plr-6 mt-6">
                 <label class="label">Atención</label>
                 <ul>
-                    <li>Estos datos sólo incluyen el uso en hermes2</li>
-                    <li>Estos datos no incluyen posibles descuentos y bonificaciones activas</li>
+                    {% for k in messages %}
+                    <li>messages[k]</li>
+                    {% endfor %}
                 </ul>
             </div>
+            {% endif %}
 
         </div>
 
