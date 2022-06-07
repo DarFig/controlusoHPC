@@ -62,15 +62,9 @@ Index | {{ super() }}
             {% if data  %}
                 <div class="container">
                     <div class="columns p-4 has-text-centered">
-                        <div class="column is-4 p-1">
-                            <p class="title is-5 has-text-white">Grupo</p>
-                        </div>
-                        <div class="column is-4 p-1">
-                            <p class="title is-5 has-text-white">Horas</p>
-                        </div>
-                        <div class="column is-4 p-1">
-                            <p class="title is-5 has-text-white">UCH</p>
-                        </div>
+                        
+                        
+                        
                     </div>
                 </div>
                 
@@ -80,19 +74,28 @@ Index | {{ super() }}
                     <div class="columns p-4 has-text-weight-semibold has-text-centered">
         
                         
-        
+                        <div class="column is-4 p-1">
+                            <p class="title is-5 has-text-white">Grupo</p>
+                        </div>
                         <div class="column is-4 p-2">
                             <div class="column card has-background-light is-size-5">
                                 <p>{{group}}</p>
                             </div>
                         </div> 
-        
+                        
+                        <div class="column is-4 p-1">
+                            <p class="title is-5 has-text-white">Horas</p>
+                        </div>
                         <div class="column is-4 p-2">
                             <div class="column card has-background-light is-size-5">
                                 <p>{{data['time']}}</p>
                             </div>
                         </div>
-        
+
+
+                        <div class="column is-4 p-1">
+                            <p class="title is-5 has-text-white">UCH</p>
+                        </div>
                         <div class="column is-4 p-2">
                             <div class="column card has-background-light is-size-5">
                                 <p>{{ data['uch'] }}</p>
