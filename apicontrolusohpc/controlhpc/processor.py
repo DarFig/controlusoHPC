@@ -50,10 +50,10 @@ def get_user_usage(user:str, data:list)->dict:
             user_jobduration += duration
 
             uc = __get_uc(work)
-            group_uc += uc
+            user_uc += uc
 
             hours = __s_h(duration)
-            group_uch += hours * uc
+            user_uch += hours * uc
 
     user_hours = __s_h(user_jobduration)
     #uch = hours * uc
