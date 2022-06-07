@@ -6,7 +6,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, session
 )
 
-from utils import authentication, search_group
+from apicontrolusohpc.utils import authentication, search_group
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
