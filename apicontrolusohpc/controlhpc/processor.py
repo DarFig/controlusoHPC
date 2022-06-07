@@ -49,7 +49,7 @@ def get_user_usage(user:str, data:list)->dict:
             duration = __get_jobduration(work)
             user_jobduration += duration
 
-            uc += __get_uc(work)
+            uc = __get_uc(work)
             group_uc += uc
 
             hours = __s_h(duration)
