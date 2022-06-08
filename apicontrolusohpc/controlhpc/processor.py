@@ -10,7 +10,8 @@ def get_groups_usages(data:list)->list:
     groups_usages = {}
     print(len(data))
     for group in groups:
-        groups_usages[group] = get_group_usage(group,data)
+        if group != "ROOT":
+            groups_usages[group] = get_group_usage(group,data)
     return groups_usages
 
 def get_group_usage(group:str, data:list)->dict:

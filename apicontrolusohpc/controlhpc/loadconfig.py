@@ -29,6 +29,11 @@ def get_secret():
     new_parser.read(__CONFIGFILE)
     return new_parser.get("config", "SECRET")
 
+def get_admin():
+    new_parser = ConfigParser()
+    new_parser.read(__CONFIGFILE)
+    return new_parser.get("config", "ADMIN")
+
 def get_ldap_server():
     new_parser = ConfigParser()
     new_parser.read(__CONFIGFILE)

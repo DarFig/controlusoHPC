@@ -6,6 +6,7 @@ from flask import (
 
 from apicontrolusohpc.controlhpc.controller import Controller
 from apicontrolusohpc.controlhpc.processor import *
+from apicontrolusohpc.controlhpc.loadconfig import get_admin
 
 from apicontrolusohpc.auth import login_required
 from apicontrolusohpc.utils import get_messages
@@ -38,9 +39,12 @@ def index():
 
     return render_template('_views/index.html')
 
-@views_bp.route('/group', methods=['GET','POST'])
+@views_bp.route('/groups', methods=['GET','POST'])
 @login_required
 def index_group():
+    user = session['username']
+    if user != get_admin():
+        return render_template('_views/index.html')
 
     if request.method == "POST":
         #recuperar entradas
