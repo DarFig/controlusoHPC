@@ -28,7 +28,7 @@ def authentication(username:str, password:str)->str:
         return "error"
 
 
-def search_group(user_data:str):
+def search_group(user_data:str)->str:
     #return user_data[0][1]["ou"][0]
     #group = re.split("-", str(user_data[0][1]["ou"][0]))[1].strip("\'").strip()
     group = ""
@@ -47,3 +47,33 @@ def get_messages():
         return data
     except:
         return None
+
+
+def fix_group(group:str)->str:
+    import json
+    try:
+        f = open('fixedgroups.config', "r")
+        data = json.loads(f.read())
+        f.close()
+        if group in data:
+            print(group, " - ", data)
+            group = data[group]
+            print(group)
+        return group
+    except:
+        return group
+
+
+def normalize_group(group:str)->str:
+    import json
+    try:
+        f = open('normalizedgroups.config', "r")
+        data = json.loads(f.read())
+        f.close()
+        if group in data:
+            print(group, " x ", data)
+            group = data[group]
+            print(group)
+        return group
+    except:
+        return group

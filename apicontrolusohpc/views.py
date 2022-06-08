@@ -9,7 +9,7 @@ from apicontrolusohpc.controlhpc.processor import *
 from apicontrolusohpc.controlhpc.loadconfig import get_admin
 
 from apicontrolusohpc.auth import login_required
-from apicontrolusohpc.utils import get_messages
+from apicontrolusohpc.utils import get_messages, fix_group, normalize_group
 
 views_bp = Blueprint('views', __name__)
 
@@ -25,7 +25,7 @@ def index():
         
         user = session['username']
         group = session['group']
-        
+        group = fix_group(group)
 
         # cálculo
         new_controller = Controller()
@@ -35,7 +35,7 @@ def index():
         results = get_group_usage(group, data)
         users =  get_group_users_usage(group, data)
         #
-        return render_template('_views/index.html', data=results, group=group, messages=get_messages(), users=users)
+        return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users)
 
     return render_template('_views/index.html')
 
