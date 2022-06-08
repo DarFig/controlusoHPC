@@ -22,6 +22,15 @@ IndexGroup | {{ super() }}
                         <label class="label">Fecha inicio</label>
                         <div class="control">
                             <input type="date" id="start_date" name="start_date">
+                            <script>
+                                var options = {
+                                    dateFormat: 'dd/MM/yyyy',
+                                    color: "primary",
+                                    showClearButton: false,
+                                    startDate: "01/01/2022"
+                                };
+                                bulmaCalendar.attach('[type="date"]', options);
+                            </script>
                         </div>
                     </div>
 
@@ -30,10 +39,12 @@ IndexGroup | {{ super() }}
                         <div class="control">
                             <input type="date" id="end_date" name="end_date">
                             <script>
+                                let today = new Date().toLocaleDateString();
                                 var options = {
                                     dateFormat: 'dd/MM/yyyy',
-                                    showFooter: false,
-                                    color: "link"
+                                    color: "primary",
+                                    showClearButton: false,
+                                    startDate: today                                    
                                 };
                                 bulmaCalendar.attach('[type="date"]', options);
                             </script>
