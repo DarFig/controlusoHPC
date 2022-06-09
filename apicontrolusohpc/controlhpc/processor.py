@@ -8,7 +8,7 @@ from apicontrolusohpc.controlhpc.loadconfig import get_use_uc_conversion
 def get_groups_usages(data:list)->list:
     groups = get_groups(data)
     groups_usages = {}
-    print(len(data))
+    #print(len(data))
     for group in groups:
         if group != "ROOT":
             groups_usages[group] = get_group_usage(group,data)
