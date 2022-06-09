@@ -25,6 +25,7 @@ def index():
         
         user = session['username']
         group = session['group']
+
         group = fix_group(group)
 
         # cálculo

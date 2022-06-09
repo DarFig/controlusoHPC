@@ -9,11 +9,8 @@ from apicontrolusohpc.controlhpc.loadconfig import get_ldap_server, get_base_dn,
 
 def authentication(username:str, password:str)->str:
     ldap_server = get_ldap_server()
-    print(ldap_server) 
     user_dn = "uid="+username+get_user_dn()
-    print(user_dn)
     base_dn = get_base_dn()
-    print(base_dn)
     connect = ldap.initialize(ldap_server)
     search_filter = "uid="+username
  
@@ -29,13 +26,9 @@ def authentication(username:str, password:str)->str:
 
 
 def search_group(user_data:str)->str:
-    #return user_data[0][1]["ou"][0]
-    #group = re.split("-", str(user_data[0][1]["ou"][0]))[1].strip("\'").strip()
-    group = ""
+    group = re.split("-", str(user_data[0][1]["ou"][0]))[1].strip("\'").strip()
     if not group:
-        group = re.split("/", str(user_data[0][1]["homeDirectory"][0]))[2].strip("\'").strip().upper()
-        #re.search("home\/*\/", user_data)
-    
+        group = re.split("/", str(user_data[0][1]["homeDirectory"][0]))[2].strip("\'").strip().upper() 
     return group
 
 def get_messages():
@@ -56,9 +49,7 @@ def fix_group(group:str)->str:
         data = json.loads(f.read())
         f.close()
         if group in data:
-            print(group, " - ", data)
             group = data[group]
-            print(group)
         return group
     except:
         return group
@@ -71,9 +62,7 @@ def normalize_group(group:str)->str:
         data = json.loads(f.read())
         f.close()
         if group in data:
-            print(group, " x ", data)
             group = data[group]
-            print(group)
         return group
     except:
         return group

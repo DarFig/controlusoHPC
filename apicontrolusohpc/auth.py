@@ -34,10 +34,7 @@ def login():
             session.clear()
             session["username"] = username
             session["group"] = group
-            #print(group)
             return redirect(url_for('index'))
-        
-        #print(error) 
     return render_template("_views/login.html")
 
 
