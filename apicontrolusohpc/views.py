@@ -44,8 +44,9 @@ def index():
 @login_required
 def index_group():
     user = session['username']
-    if user != get_admin():
-        return render_template('_views/index.html')
+    admins = get_admin()
+    if user not in admins:
+        return redirect(url_for("index"))
 
     if request.method == "POST":
         #recuperar entradas
