@@ -32,7 +32,7 @@ def get_secret():
 def get_admin():
     new_parser = ConfigParser()
     new_parser.read(__CONFIGFILE)
-    return new_parser.get("config", "ADMIN")
+    return new_parser.get("config", "ADMIN").split(",")
 
 def get_ldap_server():
     new_parser = ConfigParser()
