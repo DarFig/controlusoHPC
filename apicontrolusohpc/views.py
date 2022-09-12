@@ -43,7 +43,7 @@ def index():
         results = get_group_usage(group, data)
         users =  get_group_users_usage(group, data)
         #
-        return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users)
+        return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users, start_date=start_date, end_date=end_date)
 
     return render_template('_views/index.html')
 
@@ -71,7 +71,7 @@ def index_group():
         data =  new_controller.match_date_range(start_date, end_date)
         results = get_groups_usages(data)
         #
-        return render_template('_views/results.html', data=results)
+        return render_template('_views/results.html', data=results, start_date=start_date, end_date=end_date)
 
     return render_template('_views/index_group.html')
 
