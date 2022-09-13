@@ -29,15 +29,16 @@ def index():
         if end_date == "":
             end_date = date.today().strftime("%d/%m/%Y")
         #group = request.form["group"]
-        
+
         user = session['username']
         group = session['group']
 
         group = fix_group(group)
+        #group = ""
 
         # cálculo
         new_controller = Controller()
-        data = new_controller.match_date_range(start_date, end_date)
+        data = new_controller.match_date_range(start_date, end_date,group)
         results = {}
         #results[group] = get_group_usage(group, data)
         results = get_group_usage(group, data)
@@ -68,7 +69,7 @@ def index_group():
 
         #calculo
         new_controller = Controller()
-        data =  new_controller.match_date_range(start_date, end_date)
+        data =  new_controller.match_all_groups_date_range(start_date, end_date)
         results = get_groups_usages(data)
         #
         return render_template('_views/results.html', data=results, start_date=start_date, end_date=end_date)
