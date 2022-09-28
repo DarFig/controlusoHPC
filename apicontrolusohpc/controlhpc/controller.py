@@ -3,7 +3,7 @@
 from elasticsearch import Elasticsearch
 from apicontrolusohpc.controlhpc.loadconfig import * 
 from apicontrolusohpc.controlhpc.utils import get_timestamp, data_hits
-
+import threading
 
 class Controller:
     def __init__(self):
@@ -11,6 +11,7 @@ class Controller:
         self.__HOST = "http://"+ get_hostname()+ ":" + get_port()
         self.__INDEX = get_index()
         self.client = Elasticsearch(self.__HOST)
+        self.groups_data = []
     
     def match_all(self):
         return self.client.search(index=self.__INDEX, query={"match_all": {} })
@@ -37,7 +38,8 @@ class Controller:
             scroll_size = len(data)
             all_data = all_data + data
         return all_data
-    
+   
+
     def match_all_groups_date_range(self,initial_date:str, final_date:str)->dict:
         """
         input:
@@ -47,10 +49,26 @@ class Controller:
         """
         # busco los grupos que existen
         groups = self.client.search(index=self.__INDEX,query={"match_all":{}},aggs={"must" : {"terms" : { "field" : "group", "size":100000 }}},size=0)["aggregations"]["must"]["buckets"]
-        groups_data = []
+        self.groups_data = []
+        
+        # vamos a separar las busquedas en hilos
+        def hilo(initial_date, final_date,group):
+            data_hilo = self.match_date_range(initial_date, final_date, group)
+            lock.acquire()
+            self.groups_data = self.groups_data + data_hilo
+            lock.release()
+        
+        hilos = list()
+        lock= threading.Lock() 
         for element in groups:
             group = element["key"]
             if group != "ROOT":
-                groups_data = groups_data + self.match_date_range(initial_date, final_date, group)
-        #print(groups_data)
-        return groups_data    
+                # cada hilo busca un grupo
+                t = threading.Thread(target=hilo,args=(initial_date, final_date,group))
+                hilos.append(t)
+                t.start()
+        
+        for i in hilos:
+            i.join()
+        
+        return self.groups_data    
