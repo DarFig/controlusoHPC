@@ -24,7 +24,19 @@ class Controller:
         output: dict data-json 
         """
         #return data_hits(self.client.search(index=self.__INDEX,size=100000,scroll="1m",query={"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}))
-        return data_hits(self.client.search(index=self.__INDEX,size=100000,scroll="1m",query={"bool":{"must":[{"match":{"group":group}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}}))
+        all_data = []
+        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",query={"bool":{"must":[{"match":{"group":group}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
+        scroll_id = data['_scroll_id']
+        data = data_hits(data)
+        scroll_size = len(data)
+        all_data = all_data + data
+        while scroll_size > 0:
+            data = self.client.scroll(scroll_id=scroll_id,scroll="2m")
+            scroll_id = data['_scroll_id']
+            data = data_hits(data)
+            scroll_size = len(data)
+            all_data = all_data + data
+        return all_data
     
     def match_all_groups_date_range(self,initial_date:str, final_date:str)->dict:
         """
@@ -33,6 +45,7 @@ class Controller:
             final_date: string format %d/%m/%Y
         output: dict data-json
         """
+        # busco los grupos que existen
         groups = self.client.search(index=self.__INDEX,query={"match_all":{}},aggs={"must" : {"terms" : { "field" : "group", "size":100000 }}},size=0)["aggregations"]["must"]["buckets"]
         groups_data = []
         for element in groups:
