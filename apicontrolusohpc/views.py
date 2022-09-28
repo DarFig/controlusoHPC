@@ -13,6 +13,8 @@ from apicontrolusohpc.utils import get_messages, fix_group, normalize_group
 
 from datetime import date
 
+from concurrent.futures import ThreadPoolExecutor
+
 views_bp = Blueprint('views', __name__)
 
 @views_bp.route('/', methods=['GET', 'POST'])
@@ -40,9 +42,11 @@ def index():
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date,group)
         results = {}
-        #results[group] = get_group_usage(group, data)
-        results = get_group_usage(group, data)
-        users =  get_group_users_usage(group, data)
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = pool.submit(get_group_usage, group, data).result()
+            #results = get_group_usage(group, data)
+            users = pool.submit(get_group_users_usage, group, data).result()
+        #users =  get_group_users_usage(group, data)
         #
         return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users, start_date=start_date, end_date=end_date)
 
