@@ -11,7 +11,7 @@ class Controller:
         self.__HOST = "http://"+ get_hostname()+ ":" + get_port()
         self.__INDEX = get_index()
         self.client = Elasticsearch(self.__HOST)
-        self.groups_data = []
+        self.groups_data = {}
     
     def match_all(self):
         return self.client.search(index=self.__INDEX, query={"match_all": {} })
@@ -26,7 +26,8 @@ class Controller:
         """
         #return data_hits(self.client.search(index=self.__INDEX,size=100000,scroll="1m",query={"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}))
         all_data = []
-        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",query={"bool":{"must":[{"match":{"group":group}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
+        #data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",query={"bool":{"must":[{"match":{"group":group}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
+        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",query={"bool":{"must":[{"match":{"group":group}},{"match":{"Status":"Completed"}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
         scroll_id = data['_scroll_id']
         data = data_hits(data)
         scroll_size = len(data)
@@ -38,35 +39,38 @@ class Controller:
             scroll_size = len(data)
             all_data = all_data + data
         return all_data
+    
+    def get_groups_names(self)->set:
+        _groups = self.client.search(index=self.__INDEX,query={"match_all":{}},aggs={"must" : {"terms" : { "field" : "group", "size":100000 }}},size=0)["aggregations"]["must"]["buckets"]
+        groups = set()
+        for element in _groups:
+            if element["key"] != "ROOT":
+                groups.add(element["key"])
+        return groups
    
 
-    def match_all_groups_date_range(self,initial_date:str, final_date:str)->dict:
+    def match_all_groups_date_range(self,initial_date:str, final_date:str, groups:set)->dict:
         """
         input:
             initial_date: string format %d/%m/%Y
             final_date: string format %d/%m/%Y
+            groups: set strings
         output: dict data-json
         """
         # busco los grupos que existen
-        groups = self.client.search(index=self.__INDEX,query={"match_all":{}},aggs={"must" : {"terms" : { "field" : "group", "size":100000 }}},size=0)["aggregations"]["must"]["buckets"]
-        self.groups_data = []
+        self.groups_data = {}
         
         # vamos a separar las busquedas en hilos
         def hilo(initial_date, final_date,group):
             data_hilo = self.match_date_range(initial_date, final_date, group)
-            lock.acquire()
-            self.groups_data = self.groups_data + data_hilo
-            lock.release()
+            self.groups_data[group] = data_hilo
         
         hilos = list()
-        lock= threading.Lock() 
-        for element in groups:
-            group = element["key"]
-            if group != "ROOT":
-                # cada hilo busca un grupo
-                t = threading.Thread(target=hilo,args=(initial_date, final_date,group))
-                hilos.append(t)
-                t.start()
+        for group in groups:
+            # cada hilo busca un grupo
+            t = threading.Thread(target=hilo,args=(initial_date, final_date,group))
+            hilos.append(t)
+            t.start()
         
         for i in hilos:
             i.join()

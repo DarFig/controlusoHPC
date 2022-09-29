@@ -2,16 +2,17 @@
 
 from apicontrolusohpc.controlhpc.utils import work_data, load_uc_json
 from apicontrolusohpc.controlhpc.loadconfig import get_use_uc_conversion
+from concurrent.futures import ThreadPoolExecutor
 
 
 
-def get_groups_usages(data:list)->list:
-    groups = get_groups(data)
+
+def get_groups_usages(data:dict, groups:set)->list:
     groups_usages = {}
-    #print(len(data))
-    for group in groups:
-        if group != "ROOT":
-            groups_usages[group] = get_group_usage(group,data)
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for group in groups:
+         groups_usages[group] = pool.submit(get_group_usage, group, data[group]).result()
+        #groups_usages[group] = get_group_usage(group,data)
     return groups_usages
 
 def get_group_usage(group:str, data:list)->dict:
@@ -21,18 +22,19 @@ def get_group_usage(group:str, data:list)->dict:
     group_jobduration = 0.0
     group_uc = 0.0
     group_uch = 0.0
+    
     for work in data:
         work = work_data(work)
-        if __get_group(work) == group and __get_status(work) == "Completed":
-            duration = __get_jobduration(work)
-            group_jobduration += duration
+        #if __get_group(work) == group and __get_status(work) == "Completed":
+        duration = __get_jobduration(work)
+        group_jobduration += duration
 
-            uc = __get_uc(work)
-            group_uc += uc
+        uc = __get_uc(work)
+        group_uc += uc
             
-            hours = __s_h(duration)
-            group_uch += hours * uc
-    
+        hours = __s_h(duration)
+        group_uch += hours * uc
+        #fi  
     group_hours = __s_h(group_jobduration)
     #uch = hours * uc
     return {"time":round(group_hours,2), "uc":round(group_uc,2), "uch":round(group_uch,2)}
@@ -73,13 +75,13 @@ def get_group_users_usage(group:str, data:list)->list:
 
 
 
-def get_groups(data:list)->set:
-    groups = set()
-    for work in data:
-        work = work_data(work)
-        groups.add(__get_group(work))
-
-    return groups
+#def get_groups(data:list)->set:
+#    groups = set()
+#    for work in data:
+#        work = work_data(work)
+#        groups.add(__get_group(work))
+#
+#    return groups
 
 
 
