@@ -43,13 +43,14 @@ def index():
         start_time = time.time()
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date,group)
+        owners = new_controller.get_group_users(group)
         results = {}
         print("--- %s data seconds ---" % (time.time() - start_time)) 
         start_time = time.time()
             
         with ThreadPoolExecutor(max_workers=2) as pool:
             results = pool.submit(get_group_usage, group, data).result()
-            users = pool.submit(get_group_users_usage, group, data).result()
+            users = pool.submit(get_group_users_usage, group, owners, data).result()
 
 
         #

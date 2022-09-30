@@ -47,7 +47,13 @@ class Controller:
             if element["key"] != "ROOT":
                 groups.add(element["key"])
         return groups
-   
+
+    def get_group_users(self, group)->set:
+        _users = self.client.search(index=self.__INDEX,query={"bool":{"must":[{"match":{"group":group}}]}},aggs={"must" : {"terms" : { "field" : "Owner", "size":100000}}},size=0)["aggregations"]["must"]["buckets"]
+        users = set()
+        for element in _users:
+            users.add(element["key"])
+        return users
 
     def match_all_groups_date_range(self,initial_date:str, final_date:str, groups:set)->dict:
         """

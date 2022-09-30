@@ -39,6 +39,11 @@ def get_group_usage(group:str, data:list)->dict:
     #uch = hours * uc
     return {"time":round(group_hours,2), "uc":round(group_uc,2), "uch":round(group_uch,2)}
 
+
+user_jobduration = 0.0
+user_uc = 0.0
+user_uch = 0.0
+
 def get_user_usage(user:str, data:list)->dict:
     """
     user,data[works] -> return {"time":hours, "uc":uc, "uch":uch}
@@ -47,29 +52,29 @@ def get_user_usage(user:str, data:list)->dict:
     user_uc = 0.0
     user_uch = 0.0
     for work in data:
-        work = work_data(work)
-        if __get_owner(work) == user and __get_status(work) == "Completed":
-            duration = __get_jobduration(work)
+        work_d = work_data(work)
+        if __get_owner(work_d) == user:
+            duration = __get_jobduration(work_d)
             user_jobduration += duration
 
-            uc = __get_uc(work)
+            uc = __get_uc(work_d)
             user_uc += uc
 
             hours = __s_h(duration)
             user_uch += hours * uc
 
+            #data.remove(work)
+    
     user_hours = __s_h(user_jobduration)
     #uch = hours * uc
     return {"time":round(user_hours,2), "uc":round(user_uc,2), "uch":round(user_uch,2)}
 
-def get_group_users_usage(group:str, data:list)->list:
+def get_group_users_usage(group:str, owners:set, data:list)->list:
     usuarios = {}
-    for work in data:
-        work = work_data(work)
-        if __get_group(work) == group:
-            owner = __get_owner(work)
-            if owner not in usuarios:
-                usuarios[owner] = get_user_usage(owner,data)
+    #with ThreadPoolExecutor(max_workers=2) as pool:
+    for owner in owners:   
+     usuarios[owner] = get_user_usage(owner, data)
+    #        usuarios[owner] = pool.submit(get_user_usage, owner, data).result()
 
     return usuarios 
 
