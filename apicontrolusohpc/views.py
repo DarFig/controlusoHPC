@@ -13,7 +13,7 @@ from apicontrolusohpc.utils import get_messages, fix_group, normalize_group
 
 from datetime import date
 
-#import time
+import time
 
 views_bp = Blueprint('views', __name__)
 
@@ -37,21 +37,26 @@ def index():
         group = fix_group(group)
         #group = ""
 
+
         # cálculo
-        #start_time = time.time()
+        start_time = time.time()
         new_controller = Controller()
         data = new_controller.match_date_range(start_date, end_date,group)
         owners = new_controller.get_group_users(group)
         results = {}
-        #print("--- %s data seconds ---" % (time.time() - start_time)) 
-        #start_time = time.time()
+        
+
+        print("--- %s data seconds ---" % (time.time() - start_time)) 
+        start_time = time.time()
             
 
         
         results = get_group_usage(group, data)
-        users = get_group_users_usage(group, owners, data)
+        users = {}
+        if request.form["search_type"] == "users":
+            users = get_group_users_usage(group, owners, data)
         
-        #print("--- %s seconds ---" % (time.time() - start_time))
+        print("--- %s seconds ---" % (time.time() - start_time))
         
         return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users, start_date=start_date, end_date=end_date)
 
@@ -77,17 +82,17 @@ def index_group():
             end_date = date.today().strftime("%d/%m/%Y")
 
         #calculo
-        #start_time = time.time()
+        start_time = time.time()
         new_controller = Controller()
         groups = new_controller.get_groups_names()
         data = new_controller.match_all_groups_date_range(start_date, end_date, groups)
-        
-        #print("--- %s seconds data---" % (time.time() - start_time))
-        #start_time = time.time()
+
+        print("--- %s seconds data---" % (time.time() - start_time))
+        start_time = time.time()
 
         results = get_groups_usages(data, groups)
         #
-        #print("--- %s seconds groups---" % (time.time() - start_time))
+        print("--- %s seconds groups---" % (time.time() - start_time))
         
         return render_template('_views/results.html', data=results, start_date=start_date, end_date=end_date)
 
