@@ -2,17 +2,14 @@
 
 from apicontrolusohpc.controlhpc.utils import work_data, load_uc_json
 from apicontrolusohpc.controlhpc.loadconfig import get_use_uc_conversion
-from concurrent.futures import ThreadPoolExecutor
 
 
 
 
 def get_groups_usages(data:dict, groups:set)->list:
     groups_usages = {}
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        for group in groups:
-         groups_usages[group] = pool.submit(get_group_usage, group, data[group]).result()
-        #groups_usages[group] = get_group_usage(group,data)
+    for group in groups:
+        groups_usages[group] = get_group_usage(group,data[group])
     return groups_usages
 
 def get_group_usage(group:str, data:list)->dict:
@@ -24,19 +21,16 @@ def get_group_usage(group:str, data:list)->dict:
     group_uch = 0.0
     
     for work in data:
-        work = work_data(work)
-        #if __get_group(work) == group and __get_status(work) == "Completed":
-        duration = __get_jobduration(work)
+        work_d = work_data(work)
+        duration = __get_jobduration(work_d)
         group_jobduration += duration
 
-        uc = __get_uc(work)
+        uc = __get_uc(work_d)
         group_uc += uc
             
         hours = __s_h(duration)
         group_uch += hours * uc
-        #fi  
     group_hours = __s_h(group_jobduration)
-    #uch = hours * uc
     return {"time":round(group_hours,2), "uc":round(group_uc,2), "uch":round(group_uch,2)}
 
 
@@ -63,30 +57,19 @@ def get_user_usage(user:str, data:list)->dict:
             hours = __s_h(duration)
             user_uch += hours * uc
 
-            #data.remove(work)
     
     user_hours = __s_h(user_jobduration)
-    #uch = hours * uc
     return {"time":round(user_hours,2), "uc":round(user_uc,2), "uch":round(user_uch,2)}
 
 def get_group_users_usage(group:str, owners:set, data:list)->list:
     usuarios = {}
-    #with ThreadPoolExecutor(max_workers=2) as pool:
     for owner in owners:   
-     usuarios[owner] = get_user_usage(owner, data)
-    #        usuarios[owner] = pool.submit(get_user_usage, owner, data).result()
+        usuarios[owner] = get_user_usage(owner, data)
 
     return usuarios 
 
 
 
-#def get_groups(data:list)->set:
-#    groups = set()
-#    for work in data:
-#        work = work_data(work)
-#        groups.add(__get_group(work))
-#
-#    return groups
 
 
 
