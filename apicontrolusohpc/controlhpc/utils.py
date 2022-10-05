@@ -19,8 +19,13 @@ def work_data(work:list)->list:
     return work["_source"]
 
 def load_uc_json()->dict:
+    return uc_config
+
+def __load_uc_json()->dict:
     import json
     f = open('uc.config', "r")
     data = json.loads(f.read())
     f.close()
     return data
+
+uc_config = __load_uc_json()

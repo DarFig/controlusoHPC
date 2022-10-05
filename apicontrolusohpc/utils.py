@@ -7,6 +7,7 @@ from apicontrolusohpc.controlhpc.loadconfig import get_ldap_server, get_base_dn,
 
 
 
+
 def authentication(username:str, password:str)->str:
     ldap_server = get_ldap_server()
     user_dn = "uid="+username+get_user_dn()
@@ -32,6 +33,20 @@ def search_group(user_data:str)->str:
     return group
 
 def get_messages():
+    return messages
+
+def fix_group(group:str)->str:
+    if group in fixedgroups:
+        return fixedgroups[group]
+    return group
+
+def normalize_group(group:str)->str:
+    if group in normalizedgroups:
+        return normalizedgroups[group]
+    
+    return group
+
+def __get_messages():
     import json
     try:
         f = open('messages.config', "r")
@@ -42,27 +57,35 @@ def get_messages():
         return None
 
 
-def fix_group(group:str)->str:
+def __fix_group():
     import json
     try:
         f = open('fixedgroups.config', "r")
         data = json.loads(f.read())
         f.close()
-        if group in data:
-            group = data[group]
-        return group
+        #if group in data:
+        #    group = data[group]
+        #return group
+        return data
     except:
-        return group
+        #return group
+        return data
 
 
-def normalize_group(group:str)->str:
+def __normalize_group():
     import json
     try:
         f = open('normalizedgroups.config', "r")
         data = json.loads(f.read())
         f.close()
-        if group in data:
-            group = data[group]
-        return group
+        #if group in data:
+        #    group = data[group]
+        #return group
+        return data
     except:
-        return group
+        #return group
+        return data
+
+messages = __get_messages()
+fixedgroups = __fix_group()
+normalizedgroups = __normalize_group()
