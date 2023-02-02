@@ -23,11 +23,12 @@ Index | {{ super() }}
                         <div class="control">
                             <input type="date" id="start_date" name="start_date">
                             <script>
+                                let firstDate = new Date(new Date().getFullYear(), 0, 1);
                                 var options = {
                                     dateFormat: 'dd/MM/yyyy',
                                     color: "primary",
                                     showClearButton: false,
-                                    startDate: "01/01/2022"
+                                    startDate: firstDate
                                 };
                                 bulmaCalendar.attach('[type="date"]', options);
                             </script>
