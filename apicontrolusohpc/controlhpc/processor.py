@@ -76,12 +76,12 @@ def get_group_users_usage(group:str, owners:set, data:list)->list:
 ## priv
 
 def __get_jobduration(work:list)->float:
-    #return work["JobDuration"]
     try:
         return work["JobDuration"]
     except:
-        #print(work["Status"],"---",work["CompletionDate"]-work["JobStartDate"])
-        return float(work["CompletionDate"]-work["JobStartDate"])
+        #print(work["CompletionDate"],"-", work["JobStartDate"],"---",work["CompletionDate"]-work["JobStartDate"])
+        return float(work["RemoteWallClockTime"])
+
 
 def __get_group(work:list)->str:
     try:

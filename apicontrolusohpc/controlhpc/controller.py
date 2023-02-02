@@ -24,9 +24,8 @@ class Controller:
             group: string group name
         output: dict data-json 
         """
-        #return data_hits(self.client.search(index=self.__INDEX,size=100000,scroll="1m",query={"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}))
         all_data = []
-        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",_source=["group","Owner","JobDuration","CompletionDate","JobStartDate","UserLog","RequestCpus","StartdName"],query={"bool":{"must":[{"match":{"group":group}},{"match":{"Status":"Completed"}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
+        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",_source=["group","Owner","JobDuration","RemoteWallClockTime","UserLog","RequestCpus","StartdName"],query={"bool":{"must":[{"match":{"group":group}},{"match":{"Status":"Completed"}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
         scroll_id = data['_scroll_id']
         data = data_hits(data)
         scroll_size = len(data)
