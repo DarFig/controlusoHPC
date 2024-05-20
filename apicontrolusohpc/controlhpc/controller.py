@@ -36,6 +36,7 @@ class Controller:
             data = data_hits(data)
             scroll_size = len(data)
             all_data = all_data + data
+        self.client.clear_scroll(scroll_id=scroll_id)
         return all_data
     
     def get_groups_names(self)->set:
