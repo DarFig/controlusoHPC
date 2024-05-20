@@ -63,9 +63,60 @@ def index():
 
     return render_template('_views/index.html')
 
+@views_bp.route('/group/<grupo>', methods=['GET','POST'])
+@login_required
+def index_group(grupo):
+    user = session['username']
+    admins = get_admin()
+    if user not in admins:
+        return redirect(url_for("index"))
+    
+    if request.method == "POST":
+        # recuperar entradas
+        start_date = request.form["start_date"]
+        if start_date == "":
+            current_year = date.today().year
+            start_date = "01/01/" + str(current_year)
+        end_date = request.form["end_date"]
+        if end_date == "":
+            end_date = date.today().strftime("%d/%m/%Y")
+        #group = request.form["group"]
+
+        user = session['username']
+        group = grupo
+        
+        #group = ""
+        group = fix_group(group)
+
+
+        # cálculo
+        #start_time = time.time()
+        
+        new_controller = Controller()
+        data = new_controller.match_date_range(start_date, end_date,group)
+        owners = new_controller.get_group_users(group)
+        results = {}
+        
+
+        #print("--- %s data seconds ---" % (time.time() - start_time)) 
+        #start_time = time.time()
+            
+
+        
+        results = get_group_usage(group, data)
+        users = {}
+        if request.form["search_type"] == "users":
+            users = get_group_users_usage(group, owners, data)
+        
+        #print("--- %s seconds ---" % (time.time() - start_time))
+        
+        return render_template('_views/index.html', data=results, group=normalize_group(group), messages=get_messages(), users=users, start_date=start_date, end_date=end_date)
+
+    return render_template('_views/index.html')
+
 @views_bp.route('/groups', methods=['GET','POST'])
 @login_required
-def index_group():
+def index_groups():
     user = session['username']
     admins = get_admin()
     if user not in admins:
