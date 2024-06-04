@@ -65,7 +65,7 @@ def index():
 
 @views_bp.route('/group/<grupo>', methods=['GET','POST'])
 @login_required
-def index_group(grupo):
+def index_datagroup(grupo):
     user = session['username']
     admins = get_admin()
     if user not in admins:
@@ -116,7 +116,7 @@ def index_group(grupo):
 
 @views_bp.route('/groups', methods=['GET','POST'])
 @login_required
-def index_groups():
+def index_group():
     user = session['username']
     admins = get_admin()
     if user not in admins:
@@ -142,13 +142,14 @@ def index_groups():
 
         #print("--- %s seconds data---" % (time.time() - start_time))
         #start_time = time.time()
-
+        for key, value in data.items() :
+            print (key)
         results = get_groups_usages(data, groups)
         #
         #print("--- %s seconds groups---" % (time.time() - start_time))
-        
+        print("dentro") 
         return render_template('_views/results.html', data=results, start_date=start_date, end_date=end_date)
-
+    print(request.method)
     return render_template('_views/index_group.html')
 
 
