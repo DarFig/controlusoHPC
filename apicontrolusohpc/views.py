@@ -142,14 +142,10 @@ def index_group():
 
         #print("--- %s seconds data---" % (time.time() - start_time))
         #start_time = time.time()
-        for key, value in data.items() :
-            print (key)
         results = get_groups_usages(data, groups)
         #
         #print("--- %s seconds groups---" % (time.time() - start_time))
-        print("dentro") 
         return render_template('_views/results.html', data=results, start_date=start_date, end_date=end_date)
-    print(request.method)
     return render_template('_views/index_group.html')
 
 

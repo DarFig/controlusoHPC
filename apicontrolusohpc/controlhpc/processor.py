@@ -9,8 +9,8 @@ from apicontrolusohpc.controlhpc.loadconfig import get_use_uc_conversion
 def get_groups_usages(data:dict, groups:set)->list:
     groups_usages = {}
     for group in groups:
-        if group in data:
-            groups_usages[group] = get_group_usage(group,data[group])
+        #if group in data:
+        groups_usages[group] = get_group_usage(group,data[group])
     return groups_usages
 
 def get_group_usage(group:str, data:list)->dict:

@@ -25,7 +25,7 @@ class Controller:
         output: dict data-json 
         """
         all_data = []
-        data = self.client.search(index=self.__INDEX,size=100000,scroll="2m",_source=["group","Owner","JobDuration","RemoteWallClockTime","UserLog","RequestCpus","StartdName"],query={"bool":{"must":[{"match":{"group":group}},{"match":{"Status":"Completed"}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
+        data = self.client.search(index=self.__INDEX,size=10000,scroll="2m",_source=["group","Owner","JobDuration","RemoteWallClockTime","UserLog","RequestCpus","StartdName"],query={"bool":{"must":[{"match":{"group":group}},{"match":{"Status":"Completed"}},{"range":{"RecordTime":{"gte":get_timestamp(initial_date),"lte":get_timestamp(final_date)}}}]}})
         scroll_id = data['_scroll_id']
         data = data_hits(data)
         scroll_size = len(data)
