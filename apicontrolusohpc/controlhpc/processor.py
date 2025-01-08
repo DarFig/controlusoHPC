@@ -102,6 +102,10 @@ def __get_uc(work:list)->float:
     # si es más que 2 machacamos con el valor que viene
     uc = __uc_conversion(__get_startdname(work))
     if uc > 2:
+        gpus = __get_requestgpus(work)
+        if gpus != 0:
+            #print(gpus,"--",uc,"--",gpus * uc)
+            return gpus * uc 
         return uc
     cpus = __get_requestcpus(work)
     return cpus * uc
@@ -109,6 +113,12 @@ def __get_uc(work:list)->float:
 
 def __get_requestcpus(work:list)->int:
     return work["RequestCpus"]
+
+def __get_requestgpus(work:list)->int:
+    try:
+        return work["RequestGpus"]
+    except:
+        return 0
 
 def __get_startdname(work:list)->str:
     return work["StartdName"]
